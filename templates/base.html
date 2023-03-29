@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <title>Grocery</title>
+</head>
+
+<body>
+
+
+<section class="hero is-warning mb-4">
+  <a href="{% url 'shop:dashboard' %} ">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h1 class="title is-1">Grocery Shop</h1>
+      </div>
+    </div>
+  </a>
+
+  <div class="hero-foot">
+    <nav class="tabs is-boxed is-fullwidth">
+      <div class="container">
+        <ul>
+          <li>
+            <a href="{% url 'shop:dashboard' %} ">
+              Main
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'shop:promotion_list' %} ">
+              Promotions
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'basket:detail' %}">
+              Basket
+            </a>
+          </li>
+          {% if user.is_anonymous %}
+          <li>
+            <a href="{% url 'user:login' %}">
+              Sign in
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'user:register' %}">
+              Sign up
+            </a>
+          </li>
+          {% else %}
+          <li>
+            <a href="{% url 'user:logout' %}">
+              Logout
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </div>
+</section>
+
+
+<div class="container">
+  <div class="columns">
+    {% block content %}
+
+    {% endblock content %}
+  </div>
+</div>
+
+</body>
+</html>

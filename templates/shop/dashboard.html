@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="column is-one-fifth">
+</div>
+
+<div class="column">
+  {% for product in products %}
+
+  <div class="card">
+
+    <div class="card-image">
+      <figure class="image ">
+        <img src="{{ product.image.url }}" alt="Product image">
+      </figure>
+    </div>
+
+    <div class="card-content">
+      <div class="media">
+        <div class="media-content">
+          <p class="title is-3">{{ product.title }}, {{ product.price }} $</p>
+        </div>
+      </div>
+
+      <div class="content">
+        {{ product.description }}
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+        {% if user.is_anonymous %}
+        <p>🍞Log in to buy buns</p>
+        {% elif product.id in product_ids_in_basket %}
+        <button class="button is-static">Already in the basket</button>
+        {% else %}
+        <button class="button is-warning" name="product_id_to_purchase" value="{{ product.id }}">
+          Add to basket
+        </button>
+        {% endif %}
+      </form>
+
+    </div>
+  </div>
+  <br>
+  {% empty %}
+  <div class="field is-grouped is-grouped-centered">
+    <div class="block">
+      <h2 class="title is-3">Where did all the buns go?!👿</h2>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+<div class="column is-one-fifth">
+
+  <form method="get">
+    <p><b>Price</b></p>
+    {% for form in price_form %}
+    {{form.label_tag}}
+    {% for error in form.errors %}
+    <p class="help is-danger">{{ error }}</p>
+    {% endfor %}
+    {{form}}
+    {% endfor %}
+    <button type="submit" class='button is-warning mt-5'>Confirm</button>
+  </form>
+
+  <br>
+
+  <form method="get">
+    <button type="submit" class='button is-warning' {% if not request.GET %} disabled {% endif %}>Reset</button>
+  </form>
+
+</div>
+
+
+{% endblock content %}

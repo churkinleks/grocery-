@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="column is-half is-offset-one-quarter">
+  <div class="box ">
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="block">
+        <h2 class="title is-2">Sign in to the shop</h2>
+      </div>
+
+      {% for error in form.non_field_errors %}
+      <div class="notification is-danger is-light">{{ error }}</div>
+      {% endfor %}
+
+      <div class="field">
+        <label class='label' for="id_username">
+          Username
+        </label>
+        <div class="control">
+          <input class="input {% if form.username.errors %} is-danger {% endif %}"
+                 value="{% if form.username.value %}{{ form.username.value }}{% endif %}"
+                 type="text" name="username" maxlength="150"
+                 required="" id="id_username" autocapitalize="none"
+                 autocomplete="username" autofocus="autofocus">
+        </div>
+        {% for error in form.username.errors %}
+        <p class="help is-danger">{{ error }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="field">
+        <label class='label' for="id_username">
+          Password
+        </label>
+        <div class="control">
+          <input class="input {% if form.password.errors %} is-danger {% endif %}"
+                 type="password" name="password" required="" id="id_password" autocomplete="password">
+        </div>
+        {% for error in form.password.errors %}
+        <p class="help is-danger">{{ error }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="control">
+        <button class='button is-warning' type="submit" value="Login">Login</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}

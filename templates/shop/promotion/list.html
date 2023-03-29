@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="column">
+</div>
+
+<div class="column is-three-quarters">
+  {% for promotion in promotions %}
+  <div class="block">
+    <div class="card">
+      <a href="{{ promotion.get_absolute_url }}">
+        <div class="card-content">
+          <p class="title is-4">
+            {{ promotion.title }}, {{ promotion.price }} $
+          </p>
+          <p class="subtitle is-6">
+            {% for product in promotion.products.all %}
+            {{ product.title }},
+            {% endfor %}
+          </p>
+        </div>
+      </a>
+    </div>
+  </div>
+  {% empty %}
+  <div class="field is-grouped is-grouped-centered">
+    <div class="block">
+      <h2 class="title is-3">No promotions today 🕸</h2>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="column">
+</div>
+{% endblock content %}
