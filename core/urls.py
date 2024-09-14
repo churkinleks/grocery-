@@ -1,9 +1,9 @@
-from django.contrib import admin
 from django.conf.urls.static import static
-from django.urls import path, include, re_path
-from .yasg import urlpatterns as urlpatterns_yasg
+from django.contrib import admin
+from django.urls import include, path, re_path
 
 from . import settings
+from .yasg import urlpatterns as urlpatterns_yasg
 
 urlpatterns = [
     path('', include('apps.shop.urls')),

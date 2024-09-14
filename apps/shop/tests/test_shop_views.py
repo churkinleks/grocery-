@@ -17,10 +17,7 @@ class TestDashboardView:
     def test_purchase(self, client, auth_user, product):
         response = client.post(reverse('shop:dashboard'), {'product_id_to_purchase': product.id})
         session = client.session
-        data_of_basket = {
-            str(product.id): {
-                'title': product.title, 'price': str(product.price), 'quantity': 1
-            }}
+        data_of_basket = {str(product.id): {'title': product.title, 'price': str(product.price), 'quantity': 1}}
 
         assert response.status_code == status.HTTP_302_FOUND
         assert response.url == reverse('shop:dashboard')

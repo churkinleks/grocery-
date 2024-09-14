@@ -1,13 +1,13 @@
-from django.http import Http404
 from django.db.models import Prefetch
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
-from django.views.generic import TemplateView, View
-from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import View
 
-from .services import filter_products_by_price
-from .models import Promotion, Product
-from .forms import PriceFilterForm
 from ..basket.basket import Basket
+from .forms import PriceFilterForm
+from .models import Product, Promotion
+from .services import filter_products_by_price
 
 
 class DashboardView(View):
@@ -25,9 +25,7 @@ class DashboardView(View):
             price_to = price_form.cleaned_data.get('price_to')
             products = filter_products_by_price(price_from, price_to, products)
 
-        context = {'product_ids_in_basket': product_ids_in_basket,
-                   'price_form': price_form,
-                   'products': products}
+        context = {'product_ids_in_basket': product_ids_in_basket, 'price_form': price_form, 'products': products}
         return render(request, 'shop/dashboard.html', context=context)
 
     def post(self, request):
@@ -41,14 +39,13 @@ class DashboardView(View):
 
 
 def promotion_list_view(request):
-    promotions = Promotion.objects.prefetch_related(
-        Prefetch('products',
-                 queryset=Product.objects.all().only('title'))
-    ).filter(
-        active=True
-    ).defer(
-        'description',
-        'active',
+    promotions = (
+        Promotion.objects.prefetch_related(Prefetch('products', queryset=Product.objects.all().only('title')))
+        .filter(active=True)
+        .defer(
+            'description',
+            'active',
+        )
     )
     return render(request, 'shop/promotion/list.html', context={'promotions': promotions})
 

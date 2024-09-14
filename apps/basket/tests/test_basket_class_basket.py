@@ -4,26 +4,17 @@ import pytest
 @pytest.mark.django_db
 class TestBasket:
     def test_add_product(self, product, user_basket):
-        basket_data = {
-            str(product.id): {
-                'title': product.title, 'price': str(product.price), 'quantity': 1
-            }}
+        basket_data = {str(product.id): {'title': product.title, 'price': str(product.price), 'quantity': 1}}
         assert user_basket.basket == basket_data
 
     def test_add_the_same_product(self, product, user_basket):
         user_basket.add_product(product)
-        basket_data = {
-            str(product.id): {
-                'title': product.title, 'price': str(product.price), 'quantity': 1
-            }}
+        basket_data = {str(product.id): {'title': product.title, 'price': str(product.price), 'quantity': 1}}
         assert user_basket.basket == basket_data
 
     def test_add_quantity(self, product, user_basket):
         user_basket.add_quantity(product, quantity=132)
-        basket_data = {
-            str(product.id): {
-                'title': product.title, 'price': str(product.price), 'quantity': 133
-            }}
+        basket_data = {str(product.id): {'title': product.title, 'price': str(product.price), 'quantity': 133}}
         assert user_basket.basket == basket_data
 
     def test_add_quantity_error(self, product_factory, user_basket):

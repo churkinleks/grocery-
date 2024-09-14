@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # import socket
-
+# TODO Delete odd comments
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,10 +21,10 @@ INTERNAL_IPS = [
 #     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
 
 
-# ----- Application definition -----
+# ----- Application Definition -----
 
 DJANGO_APPS = [
-    'jazzmin',
+    'jazzmin',  # TODO Maybe remove this app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -34,12 +34,11 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    'django_extensions',
-    'debug_toolbar',
-
     'rest_framework.authtoken',
     'rest_framework',
+    'django_extensions',
     'django_filters',
+    'debug_toolbar',
     'drf_yasg',
     'djoser',
 ]
@@ -61,7 +60,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'debug_toolbar_force.middleware.ForceDebugToolbarMiddleware',
 ]
@@ -105,12 +103,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ----- Password validation -----
+# ----- Password Validation -----
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -137,7 +135,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-# ----- Static files -----
+# ----- Static Files -----
 
 STATIC_URL = 'static/'
 
@@ -149,7 +147,7 @@ MEDIA_ROOT = BASE_DIR / 'storage'
 
 AUTH_USER_MODEL = 'user.User'
 
-# ----- User registration -----
+# ----- User Registration -----
 
 LOGIN_REDIRECT_URL = 'shop:dashboard'
 LOGOUT_REDIRECT_URL = 'shop:dashboard'
@@ -159,14 +157,11 @@ LOGOUT_REDIRECT_URL = 'shop:dashboard'
 REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     # 'PAGE_SIZE': 10,
-
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
     # 'DEFAULT_PARSER_CLASSES': (
     #     'rest_framework.parsers.JSONParser',
     # ),
@@ -177,12 +172,12 @@ REST_FRAMEWORK = {
     ),
 }
 
-# ----- CELERY -----
+# ----- Celery -----
 
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 
-# ----- EMAIl -----
+# ----- Email -----
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = '/tmp/emails'

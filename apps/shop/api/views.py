@@ -1,14 +1,14 @@
-from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.response import Response
 from rest_framework import viewsets
+from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.response import Response
 
-from django.shortcuts import get_object_or_404
 from django.db.models import Prefetch
+from django.shortcuts import get_object_or_404
 
-from .serializers import CatalogSerializer, ProductSerializer, PromotionSerializer
 from ..models import Catalog, Product, Promotion
 from .permissions import IsStaffOrReadOnly
+from .serializers import CatalogSerializer, ProductSerializer, PromotionSerializer
 
 
 class CatalogAPIModelViewSet(viewsets.ReadOnlyModelViewSet):
@@ -28,9 +28,8 @@ class ProductAPIModelViewSet(viewsets.ModelViewSet):
 
 
 class PromotionAPIModelViewSet(viewsets.ViewSet):
-    """
-    Actually we can just use ReadOnlyModelViewSet, but I did it this way for variety (This is a portfolio)
-    """
+    """Actually we can just use ReadOnlyModelViewSet, but I did it this way for variety (This is a portfolio)"""
+
     queryset = Promotion.objects.all()
     permission_classes = [IsStaffOrReadOnly]
 

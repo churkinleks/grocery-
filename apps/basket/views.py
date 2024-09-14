@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 
-from .forms import BasketFormSet
 from .basket import Basket
+from .forms import BasketFormSet
 
 
 def detail_basket(request):

@@ -3,8 +3,12 @@ from rest_framework import status
 
 from django.urls import reverse
 
-from apps.shop.api.serializers import CatalogSerializer, ProductSerializer, PromotionSerializer
-from apps.shop.models import Product, Promotion
+from apps.shop.api.serializers import (
+    CatalogSerializer,
+    ProductSerializer,
+    PromotionSerializer,
+)
+from apps.shop.models import Product
 
 
 @pytest.mark.django_db
@@ -28,7 +32,11 @@ class TestCatalogAPI:
         assert response.status_code == status.HTTP_200_OK
         assert response.data == serialized_data
 
-    def test_post_superuser_user(self, api_client, api_auth_superuser, ):
+    def test_post_superuser_user(
+        self,
+        api_client,
+        api_auth_superuser,
+    ):
         response = api_client.post(reverse(self.endpoint_list))
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
@@ -49,7 +57,7 @@ class TestCatalogAPI:
 class TestProductAPI:
     endpoint_list = 'shop:product-list'
     endpoint_detail = 'shop:product-detail'
-    
+
     def test_get_list(self, api_client, api_auth_simple_user, product_factory):
         product_1, product_2 = product_factory(image=None), product_factory(image=None)
 
@@ -130,7 +138,7 @@ class TestProductAPI:
 class TestPromotionAPI:
     endpoint_list = 'shop:promotion-list'
     endpoint_detail = 'shop:promotion-detail'
-    
+
     def test_get_active_list(self, api_client, api_auth_simple_user, promotion_factory):
         promotion_1, promotion_2 = promotion_factory(active=True), promotion_factory(active=True)
 

@@ -1,5 +1,5 @@
-from django.db.models import QuerySet
 from django.contrib import admin, messages
+from django.db.models import QuerySet
 
 from .models import Catalog, Product, Promotion
 
@@ -34,8 +34,7 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ('get_promotion_type',)
     fieldsets = (
         (None, {'fields': ('title', 'price', 'quantity', 'description', 'catalog', 'get_promotion_type', 'image')}),
-        ('Technical information', {'fields': ('specification',),
-                                   'classes': ('collapse',)}),
+        ('Technical information', {'fields': ('specification',), 'classes': ('collapse',)}),
     )
     list_per_page = 25
     show_full_result_count = False
@@ -57,7 +56,7 @@ class ProductAdmin(admin.ModelAdmin):
     def get_promotion_type(self, product: Product) -> str:
         promotions = product.promotions.all()
         if promotions:
-            return '\n'.join((f'* {i}' for i in promotions))
+            return '\n'.join(f'* {i}' for i in promotions)
         return 'Not in the promotion'
 
 
@@ -83,14 +82,14 @@ class CatalogAdmin(admin.ModelAdmin):
     def get_subdirectories(self, catalog: Catalog) -> str:
         subdirectories = catalog.subdirectories.all()
         if subdirectories:
-            return '\n'.join((f'* {i}' for i in subdirectories))
+            return '\n'.join(f'* {i}' for i in subdirectories)
         return 'No subdirectories'
 
     @admin.display(description='Products in the catalog')
     def get_products(self, catalog: Catalog) -> str:
         products = catalog.products.all()
         if products:
-            return '\n'.join((f'* {i}' for i in products))
+            return '\n'.join(f'* {i}' for i in products)
         return 'No products'
 
 

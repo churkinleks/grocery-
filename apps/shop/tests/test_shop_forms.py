@@ -39,6 +39,6 @@ def test_price_filer_form(price_from, price_to, validity):
         data={
             'price_from': price_from,
             'price_to': price_to,
-        }
+        },
     )
     assert form.is_valid() == validity

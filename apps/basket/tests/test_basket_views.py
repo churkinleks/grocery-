@@ -39,10 +39,7 @@ class TestDetailBasket:
             'form-MAX_NUM_FORMS': '1000',
             'form-0-quantity': '20',
         }
-        basket_data = {
-            str(product.id): {
-                'title': product.title, 'price': str(product.price), 'quantity': 20
-            }}
+        basket_data = {str(product.id): {'title': product.title, 'price': str(product.price), 'quantity': 20}}
 
         response = client.post(reverse('basket:detail'), payload)
         session = client.session

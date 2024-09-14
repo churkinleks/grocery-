@@ -16,10 +16,10 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class PromotionSerializer(serializers.Serializer):
-    """
-    These fields completely simulate the behavior of serializers.ModelSerializer (This is a portfolio)
+    """These fields completely simulate the behavior of serializers.ModelSerializer (This is a portfolio)
     But this serializer doesn't provide method save and so on
     """
+
     id = serializers.IntegerField(label='ID', read_only=True)
     title = serializers.CharField(max_length=50)
     description = serializers.CharField()

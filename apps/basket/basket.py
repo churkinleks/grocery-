@@ -4,9 +4,7 @@ from apps.shop.models import Product
 
 
 class Basket:
-    """
-    A base Basket class, providing some default behaviors for a user basket in a session
-    """
+    """A base Basket class, providing some default behaviors for a user basket in a session"""
 
     def __init__(self, request):
         self.session = request.session
@@ -22,9 +20,7 @@ class Basket:
         if product_id in self.basket:
             self.basket[product_id]['quantity'] = quantity
         else:
-            self.basket[product_id] = {'title': product.title,
-                                       'price': str(product.price),
-                                       'quantity': quantity}
+            self.basket[product_id] = {'title': product.title, 'price': str(product.price), 'quantity': quantity}
         self.save()
 
     def add_quantity(self, product: Product, quantity: int) -> None:
@@ -49,8 +45,7 @@ class Basket:
         self.session.modified = True
 
     def get_total_price(self) -> Decimal:
-        return sum(Decimal(item['price']) * item['quantity']
-                   for item in self.basket.values())
+        return sum(Decimal(item['price']) * item['quantity'] for item in self.basket.values())
 
     def get_total_quantity(self) -> int:
         return sum(item['quantity'] for item in self.basket.values())

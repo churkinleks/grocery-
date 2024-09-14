@@ -1,5 +1,5 @@
-from django.shortcuts import redirect
 from django.contrib.auth import login
+from django.shortcuts import redirect
 from django.views.generic import FormView
 
 from .forms import CustomUserCreationForm

@@ -1,10 +1,13 @@
 from rest_framework import routers
 
-from django.urls import path, include
+from django.urls import include, path
 
-from .views import DashboardView, promotion_list_view, promotion_detail_view
-from .api.views import CatalogAPIModelViewSet, ProductAPIModelViewSet, PromotionAPIModelViewSet
-
+from .api.views import (
+    CatalogAPIModelViewSet,
+    ProductAPIModelViewSet,
+    PromotionAPIModelViewSet,
+)
+from .views import DashboardView, promotion_detail_view, promotion_list_view
 
 app_name = 'shop'
 
