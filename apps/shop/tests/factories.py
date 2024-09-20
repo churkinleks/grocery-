@@ -10,7 +10,7 @@ fake = Faker()
 @register
 class CatalogFactory(factory.django.DjangoModelFactory):
     title = factory.Sequence(lambda num: f'Catalog #{num}')
-    upper_catalog = None
+    top_catalog = None
 
     class Meta:
         model = Catalog
@@ -18,11 +18,12 @@ class CatalogFactory(factory.django.DjangoModelFactory):
 
 @register
 class ProductFactory(factory.django.DjangoModelFactory):
+    catalog = factory.SubFactory(CatalogFactory)
+
     title = factory.Sequence(lambda num: f'Product #{num}')
     price = fake.pydecimal(left_digits=2, right_digits=2, positive=True)
     quantity = fake.random_int(1, 100)
     description = fake.text(500)
-    catalog = factory.SubFactory(CatalogFactory)
     # image - default
     # specification - default
 

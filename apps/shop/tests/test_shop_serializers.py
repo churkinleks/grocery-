@@ -10,9 +10,9 @@ from apps.shop.api.serializers import (
 @pytest.mark.django_db
 class TestCatalogSerializer:
     def test_serialize_correct_instances(self, catalog_factory, catalog):
-        catalog = catalog_factory(upper_catalog=catalog)
+        catalog = catalog_factory(top_catalog=catalog)
         serialized_data = CatalogSerializer(catalog).data
-        expected_data = {'id': catalog.id, 'title': catalog.title, 'upper_catalog': catalog.upper_catalog.id}
+        expected_data = {'id': catalog.id, 'title': catalog.title, 'top_catalog': catalog.top_catalog.id}
         assert serialized_data == expected_data
 
 

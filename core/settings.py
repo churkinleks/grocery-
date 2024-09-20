@@ -1,11 +1,8 @@
 from pathlib import Path
 
-# import socket
-# TODO Delete odd comments
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-scx13j3ftkj#trrjlnz(a-xq1)ycha%@foax(+&y_)#2zn1g*x'
+SECRET_KEY = 'django-insecure-scx13j3ftkj#trrjlnz(a-xq1)ycha%@foax(+&y_)#2zn1g*x'  # noqa: S105
 
 DEBUG = True
 
@@ -15,16 +12,9 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-# TODO Set env DOCKER = True and check below in IF
-# if DEBUG:
-#     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-#     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
-
-
 # ----- Application Definition -----
 
 DJANGO_APPS = [
-    'jazzmin',  # TODO Maybe remove this app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -167,7 +157,6 @@ REST_FRAMEWORK = {
     # ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
 }
@@ -180,4 +169,4 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 # ----- Email -----
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = '/tmp/emails'
+EMAIL_FILE_PATH = '/tmp/emails'  # noqa: S108

@@ -10,17 +10,20 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
-        fields = UserCreationForm.Meta.fields + ('email',)
+        fields = (*UserCreationForm.Meta.fields, 'email')
 
-    def clean_email(self):
-        """Checking for email availability"""
-        email = self.cleaned_data.get('email')
+    def clean_email(self) -> str:
+        """Checking for Email availability"""
+        email: str = self.cleaned_data['email']
         if get_user_model().objects.filter(email=email).exists():
-            raise ValidationError(_('A user with this email already exists'))
+            raise ValidationError(_('A user with this Email already exists.'))
         return email
 
-    def send_email(self):
+    def send_email(self) -> None:
         """Uncomment the code below for testing Celery"""
+
+        # TODO(Aleksei Churkin): Check that code below works correclty
+
         # send_feedback_email_task.delay(
         #     self.cleaned_data['email'],
         #     'You have successfully registered',

@@ -9,7 +9,7 @@ class TestDashboardView:
     def test_view(self, client, product):
         response = client.get(reverse('shop:dashboard'))
 
-        assert response.status_code == 200
+        assert response.status_code == status.HTTP_200_OK
         assert product.title.encode() in response.content
         assert product.description.encode() in response.content
         assert str(product.price).encode() in response.content
@@ -27,7 +27,7 @@ class TestDashboardView:
 @pytest.mark.django_db
 def test_promotion_list_view(client, promotion_factory, product):
     promotion = promotion_factory(active=True, products=[product])
-    response = client.get(reverse('shop:promotion_list'))
+    response = client.get(reverse('shop:promotions'))
 
     assert response.status_code == status.HTTP_200_OK
     assert promotion.title.encode() in response.content
@@ -38,7 +38,7 @@ def test_promotion_list_view(client, promotion_factory, product):
 @pytest.mark.django_db
 def test_promotion_active_detail_view(client, promotion_factory):
     promotion = promotion_factory(active=True)
-    response = client.get(reverse('shop:promotion_detail', args=(promotion.slug,)))
+    response = client.get(reverse('shop:promotions_detail', args=(promotion.slug,)))
 
     assert response.status_code == status.HTTP_200_OK
     assert promotion.title.encode() in response.content
@@ -48,5 +48,5 @@ def test_promotion_active_detail_view(client, promotion_factory):
 @pytest.mark.django_db
 def test_promotion_inactive_detail_view(client, promotion_factory):
     promotion = promotion_factory(active=False)
-    response = client.get(reverse('shop:promotion_detail', args=(promotion.slug,)))
+    response = client.get(reverse('shop:promotions_detail', args=(promotion.slug,)))
     assert response.status_code == status.HTTP_404_NOT_FOUND

@@ -8,7 +8,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title='GroceryShop',
         default_version='v1',
-        description='Super description',
+        description='Description of GroceryShop',
         license=openapi.License(name='BSD License'),
     ),
     public=True,

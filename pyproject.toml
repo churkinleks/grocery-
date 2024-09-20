@@ -8,10 +8,9 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
-django = "^4.2.16"              # TODO Change to new version.
+django = "^4.2.16"
 celery = "^5.4.0"
 djangorestframework = "^3.15.2"
-django-jazzmin = "^3.0.0"
 django-filter = "^24.3"
 drf-yasg = "^1.21.7"
 djoser = "^2.2.3"
@@ -27,16 +26,20 @@ isort = "^5.13.2"
 ipython = "^8.27.0"
 pre-commit = "^3.8.0"
 pytest = "^8.3.2"
+pytest-django = "^4.9.0"
+pytest-factoryboy = "^2.7.0"
 factory-boy = "^3.3.1"
 django-extensions = "^3.2.3"
 django-debug-toolbar = "^4.4.6"
 django-debug-toolbar-force = "^0.2"
 
+[tool.poetry.group.stubs.dependencies]
+django-stubs = "^5.0.4"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-# TODO Check this block again
 [tool.isort]
 line_length = 90
 multi_line_output = 3
@@ -45,9 +48,25 @@ include_trailing_comma = true
 known_django = "django"
 default_section = "THIRDPARTY"
 known_first_party = "apps,core"
-sections = "FUTURE,STDLIB,THIRDPARTY,DJANGO,FIRSTPARTY,LOCALFOLDER"
-
-skip = ".git,.venv,venv,.env,env,migrations,.pytest_cache,logs,storage"
+sections = [
+  "FUTURE",
+  "STDLIB",
+  "THIRDPARTY",
+  "DJANGO",
+  "FIRSTPARTY",
+  "LOCALFOLDER",
+]
+skip = [
+  ".git",
+  ".venv",
+  "venv",
+  ".env",
+  "env",
+  "migrations",
+  ".pytest_cache",
+  "logs",
+  "storage",
+]
 
 [tool.ruff]
 line-length = 120
@@ -63,40 +82,26 @@ extend-exclude = [
 [tool.ruff.lint]
 select = ["ALL"]
 
-# extend-select = [
-#   # "F",   Pyflakes (Default)
-#   "B",  # flake8-bugbear
-#   "S",  # flake8-bandit
-#   "G",  # flake8-logging-format
-#   "N",  # pep8-naming
-#   "Q",  # flake8-quotes
-#   "DJ", # flake8-django
-#   "UP", # pyupgrade
-#   "PT", # flake8-pytest-style
-#   # "ANN", # flake8-annotations  TODO
-#   "C90",   # mccabe
-#   "T20",   # flake8-print
-#   "SIM",   # flake8-simplify
-#   "PTH",   # flake8-use-pathlib
-#   "SLF",   # flake8-self
-#   "ISC",   # flake8-implicit-str-concat
-#   "ASYNC", # flake8-async
-# ]
-
 ignore = [
   # Modules
   "I",   # isort
   "D",   # pydocstyle
   "EM",  # flake8-errmsg
+  "FA",  # flake8-future-annotations
   "ERA", # eradicate
   "FIX", # flake8-fixme
   "INP", # flake8-no-pep420
   "ANN", # flake8-annotations
   "ARG", # flake8-unused-arguments
+
   # Codes
-  "S101",
-  "DJ008",
-  "TRY003",
+  "S101",   # assert
+  "C408",   # unnecessary-collection-call
+  "TD003",  # missing-todo-link
+  "SIM103", # needless-bool
+  "SIM118", # in-dict-keys
+  "TRY003", # raise-vanilla-args
+  "RUF012", # mutable-class-default
 ]
 
 [tool.ruff.lint.flake8-quotes]
@@ -112,3 +117,7 @@ fixture-parentheses = false
 line-length = 120
 skip-string-normalization = true
 extend-exclude = '\.env|env|migrations|\.pytest_cache|logs|storage'
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "core.settings"
+python_files = ["test_*.py", "*_test.py"]

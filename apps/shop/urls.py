@@ -2,19 +2,19 @@ from rest_framework import routers
 
 from django.urls import include, path
 
-from .api.views import (
+from apps.shop import views
+from apps.shop.api.views import (
     CatalogAPIModelViewSet,
     ProductAPIModelViewSet,
     PromotionAPIModelViewSet,
 )
-from .views import DashboardView, promotion_detail_view, promotion_list_view
 
 app_name = 'shop'
 
 urlpatterns = [
-    path('', DashboardView.as_view(), name='dashboard'),
-    path('promotions', promotion_list_view, name='promotion_list'),
-    path('promotions/<slug:slug>', promotion_detail_view, name='promotion_detail'),
+    path('', views.DashboardView.as_view(), name='dashboard'),
+    path('promotions', views.promotions, name='promotions'),
+    path('promotions/<slug:slug>', views.promotions_detail, name='promotions_detail'),
 ]
 
 # ----- API -----

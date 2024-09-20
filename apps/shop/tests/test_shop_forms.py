@@ -4,8 +4,8 @@ from apps.shop.forms import PriceFilterForm
 
 
 @pytest.mark.parametrize(
-    'price_from, price_to, validity',
-    (
+    ('price_from', 'price_to', 'validity'),
+    [
         (None, None, True),
         (0, None, True),
         (1.22, None, True),
@@ -32,7 +32,7 @@ from apps.shop.forms import PriceFilterForm
         (None, -1, False),
         ('text', 0, False),
         (0, 'text', False),
-    ),
+    ],
 )
 def test_price_filer_form(price_from, price_to, validity):
     form = PriceFilterForm(

@@ -1,14 +1,15 @@
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
-from .basket import Basket
-from .forms import BasketFormSet
+from apps.basket.basket import Basket
+from apps.basket.forms import BasketFormSet
 
 
-def detail_basket(request):
+def detail_basket(request: HttpRequest) -> HttpResponse:
     if request.user.is_anonymous:
         return render(request, 'basket/anonymous.html')
 
-    user_basket = Basket(request)
+    user_basket: Basket = Basket(request)
     initial_data = [{'id': key, **value} for key, value in user_basket.items()]
     basket_form_set = BasketFormSet(initial=initial_data)
 

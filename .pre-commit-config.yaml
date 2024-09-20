@@ -3,7 +3,7 @@ default_language_version:
 exclude: migrations|storage
 repos:
   - repo: https://github.com/python-poetry/poetry
-    rev: "1.8"
+    rev: "1.8.0"
     hooks:
       - id: poetry-check
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -20,7 +20,7 @@ repos:
       - id: check-yaml
       - id: check-xml
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.4
+    rev: v0.6.6
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
@@ -32,12 +32,12 @@ repos:
     rev: 5.13.2
     hooks:
       - id: isort
-  # - repo: local
-  # hooks:
-  # - id: pytest
-  # name: pytest
-  # language: system
-  # Тоже самое что и  "bash -c 'cd backend && pytest --reuse-db .'", но работает на всех OC
-  # entry: poetry run python -c "import os, subprocess; os.chdir('backend'); subprocess.check_call(['pytest', '.'])"
-  # pass_filenames: false
-  # stages: [push]
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        language: system
+        # The same as the "bash -c 'pytest .'" but it works on all operation systems.
+        entry: poetry run python -c "import os, subprocess; subprocess.check_call(['pytest', '.'])"
+        pass_filenames: false
+        stages: [push]

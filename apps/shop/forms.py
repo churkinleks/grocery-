@@ -1,24 +1,24 @@
-from django import forms
+from django.forms import DecimalField, Form, NumberInput
 from django.utils.translation import gettext_lazy as _
 
 
-class PriceFilterForm(forms.Form):
-    price_from = forms.DecimalField(
+class PriceFilterForm(Form):
+    price_from = DecimalField(
         label=_('From'),
         min_value=0,
         decimal_places=2,
         required=False,
-        widget=forms.NumberInput(attrs={'class': 'input'}),
-        error_messages={'min_value': _('The price cannot be lower than 0')},
+        widget=NumberInput(attrs={'class': 'input'}),
+        error_messages={'min_value': _('The price cannot be lower than 0.')},
     )
 
-    price_to = forms.DecimalField(
+    price_to = DecimalField(
         label=_('To'),
         min_value=0,
         decimal_places=2,
         required=False,
-        widget=forms.NumberInput(attrs={'class': 'input'}),
-        error_messages={'min_value': _('The price cannot be lower than 0')},
+        widget=NumberInput(attrs={'class': 'input'}),
+        error_messages={'min_value': _('The price cannot be lower than 0.')},
     )
 
     def clean(self):
@@ -27,5 +27,5 @@ class PriceFilterForm(forms.Form):
             price_from = self.cleaned_data.get('price_from')
             price_to = self.cleaned_data.get('price_to')
             if price_from and price_to is not None and price_from > price_to:
-                self.add_error('price_to', _("The price 'To' should be greater than the price 'From'"))
+                self.add_error('price_to', _("The price 'To' should be greater than the price 'From'."))
         return self.cleaned_data

@@ -6,7 +6,7 @@ from django.urls import reverse
 
 
 @pytest.mark.parametrize(
-    'reverse_url, status_code',
+    ('reverse_url', 'status_code'),
     [
         ('register', status.HTTP_200_OK),
         ('login', status.HTTP_200_OK),
@@ -20,7 +20,7 @@ def test_render_views(client, reverse_url, status_code):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    'username, password1, password2, email, status_code, count',
+    ('username', 'password1', 'password2', 'email', 'status_code', 'count'),
     [
         ('Aleksei', '12ddDS34_2', '12ddDS34_2', 'alex@gmail.com', status.HTTP_302_FOUND, 1),
         ('Aleksei', '12ddDS34_2', '12ddDS34_1', 'alex@gmail.com', status.HTTP_200_OK, 0),
@@ -35,7 +35,7 @@ def test_render_views(client, reverse_url, status_code):
         ('', '12ddDS34_2', '12ddDS34_2', 'alex@gmail.com', status.HTTP_200_OK, 0),
     ],
 )
-def test_register_view(client, username, password1, password2, email, status_code, count):
+def test_register_view(client, username, password1, password2, email, status_code, count):  # noqa: PLR0913
     payload = {
         'username': username,
         'password1': password1,
@@ -62,7 +62,7 @@ def test_correct_login_view(client, user):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    'username, password, status_code',
+    ('username', 'password', 'status_code'),
     [
         ('Aleksei', '12ddDS34_2', status.HTTP_200_OK),
         ('Aleksei', '123', status.HTTP_200_OK),

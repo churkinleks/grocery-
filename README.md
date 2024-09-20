@@ -1,17 +1,5 @@
 # Grocery Shop
 
-## Запуск
-
-```bash
-python -m pip install requirements.txt
-```
-
-```bash
-python manage.py runserver
-```
-
-superuser = admin:admin
-
 ## Описание
 
 Grocery Shop - это пример маленького магазинчика, где можно посмотреть
@@ -20,3 +8,15 @@ Grocery Shop - это пример маленького магазинчика, 
 
 Данный проект носит исключительно демонстрационный характер,
 поэтому иногда в коде может быть намеренная избыточность.
+
+## Запуск
+
+```bash
+poetry install && poetry shell
+```
+
+```bash
+python manage.py runserver
+```
+
+superuser = admin:admin

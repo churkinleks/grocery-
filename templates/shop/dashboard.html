@@ -28,14 +28,15 @@
 
       <form method="post">
         {% csrf_token %}
+
         {% if user.is_anonymous %}
-        <p>🍞Log in to buy buns</p>
+          <p>🍞Log in to buy buns</p>
         {% elif product.id in product_ids_in_basket %}
-        <button class="button is-static">Already in the basket</button>
+          <button class="button is-static">Already in the basket</button>
         {% else %}
-        <button class="button is-warning" name="product_id_to_purchase" value="{{ product.id }}">
-          Add to basket
-        </button>
+          <button class="button is-warning" name="product_id_to_purchase" value="{{ product.id }}">
+            Add to basket
+          </button>
         {% endif %}
       </form>
 

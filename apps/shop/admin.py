@@ -1,7 +1,7 @@
 from django.contrib import admin, messages
 from django.db.models import QuerySet
 
-from .models import Catalog, Product, Promotion
+from apps.shop.models import Catalog, Product, Promotion
 
 
 class QuantityFilter(admin.SimpleListFilter):
@@ -62,28 +62,28 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Catalog)
 class CatalogAdmin(admin.ModelAdmin):
-    list_display = ('title', 'is_it_subdirectory')
-    readonly_fields = ('get_products', 'get_subdirectories')
+    list_display = ('title', 'is_it_subcatalog')
+    readonly_fields = ('get_products', 'get_subcatalogs')
     search_fields = ('title',)
-    list_filter = (('upper_catalog', admin.RelatedOnlyFieldListFilter),)
+    list_filter = (('top_catalog', admin.RelatedOnlyFieldListFilter),)
     show_full_result_count = False
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.prefetch_related('upper_catalog')
+        return qs.prefetch_related('top_catalog')
 
-    @admin.display(boolean=True, description='Subdirectory?')
-    def is_it_subdirectory(self, catalog: Catalog) -> bool:
-        if catalog.upper_catalog:
+    @admin.display(boolean=True, description='Subcatalog?')
+    def is_it_subcatalog(self, catalog: Catalog) -> bool:
+        if catalog.top_catalog:
             return True
         return False
 
-    @admin.display(description='Subdirectories')
-    def get_subdirectories(self, catalog: Catalog) -> str:
-        subdirectories = catalog.subdirectories.all()
-        if subdirectories:
-            return '\n'.join(f'* {i}' for i in subdirectories)
-        return 'No subdirectories'
+    @admin.display(description='Subcatalogs')
+    def get_subcatalogs(self, catalog: Catalog) -> str:
+        subcatalogs = catalog.subcatalogs.all()
+        if subcatalogs:
+            return '\n'.join(f'* {i}' for i in subcatalogs)
+        return 'No subcatalogs'
 
     @admin.display(description='Products in the catalog')
     def get_products(self, catalog: Catalog) -> str:
@@ -106,9 +106,9 @@ class PromotionAdmin(admin.ModelAdmin):
     @admin.action(description='Make active')
     def set_to_active(self, request, qs: QuerySet):
         number_of_changes = qs.update(active=True)
-        self.message_user(request, f'Changes have been made- {number_of_changes}', level=messages.SUCCESS)
+        self.message_user(request, f'Changes have been made- {number_of_changes}.', level=messages.SUCCESS)
 
     @admin.action(description='Make inactive')
     def set_inactive(self, request, qs: QuerySet):
         number_of_changes = qs.update(active=False)
-        self.message_user(request, f'Changes have been made - {number_of_changes}', level=messages.SUCCESS)
+        self.message_user(request, f'Changes have been made - {number_of_changes}.', level=messages.SUCCESS)

@@ -2,13 +2,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path
 
-from . import settings
-from .yasg import urlpatterns as urlpatterns_yasg
+from core import settings
+from core.yasg import urlpatterns as urlpatterns_yasg
 
 urlpatterns = [
-    path('', include('apps.shop.urls')),
-    path('user/', include('apps.user.urls')),
-    path('basket/', include('apps.basket.urls')),
+    path('', include('apps.shop.urls', namespace='shop')),
+    path('user/', include('apps.user.urls', namespace='user')),
+    path('basket/', include('apps.basket.urls', namespace='basket')),
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
 ]
