@@ -1,10 +1,10 @@
+from decimal import Decimal
+
 import factory
-from faker import Faker
 from pytest_factoryboy import register
 
 from apps.shop.models import Catalog, Product, Promotion
-
-fake = Faker()
+from conftest import faker
 
 
 @register
@@ -21,22 +21,28 @@ class ProductFactory(factory.django.DjangoModelFactory):
     catalog = factory.SubFactory(CatalogFactory)
 
     title = factory.Sequence(lambda num: f'Product #{num}')
-    price = fake.pydecimal(left_digits=2, right_digits=2, positive=True)
-    quantity = fake.random_int(1, 100)
-    description = fake.text(500)
+    price = factory.LazyAttribute(lambda _: faker.pydecimal(left_digits=2, right_digits=2, positive=True))
+    quantity = factory.LazyAttribute(lambda _: faker.random_int(1, 100))
+    description = factory.LazyAttribute(lambda _: faker.text(500))
     # image - default
     # specification - default
 
     class Meta:
         model = Product
 
+    class Params:
+        cheap_and_last = factory.Trait(
+            price=Decimal(1),
+            quantity=1,
+        )
+
 
 @register
 class PromotionFactory(factory.django.DjangoModelFactory):
     title = factory.Sequence(lambda num: f'Promotion #{num}')
-    description = fake.text(500)
-    price = fake.pydecimal(left_digits=2, right_digits=2, positive=True)
-    active = fake.pybool()
+    description = factory.LazyAttribute(lambda _: faker.text(500))
+    price = factory.LazyAttribute(lambda _: faker.pydecimal(left_digits=2, right_digits=2, positive=True))
+    active = factory.LazyAttribute(lambda _: faker.pybool())
     # slug - default
 
     class Meta:

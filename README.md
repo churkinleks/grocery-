@@ -11,12 +11,22 @@ Grocery Shop - это пример маленького магазинчика, 
 
 ## Запуск
 
-```bash
+```shell
 poetry install && poetry shell
 ```
 
-```bash
+```shell
 python manage.py runserver
 ```
 
 superuser = admin:admin
+
+## Pre-Commit
+
+- Установка хуков.
+
+```shell
+pre-commit install --hook-type pre-commit --hook-type pre-push
+```
+
+- При каждом `git push` будут запускаться все тесты локально.

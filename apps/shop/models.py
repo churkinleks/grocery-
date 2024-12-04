@@ -23,7 +23,7 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 
-# TODO(Aleksei Churkin): Maybe better to try django-types because anyway it's work from django-types
+# TODO(Aleksei Churkin): Maybe better to try django-types because anyway it's fork from django-types
 # and so mypy should work correcltly.
 class Catalog(Model):
     # PyRight
